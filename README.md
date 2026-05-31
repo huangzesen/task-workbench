@@ -78,6 +78,13 @@ verifiers:
 Prefer `command_argv` over shell command strings. Legacy `command` strings are rejected unless a task explicitly sets `allow_shell: true`.
 
 
+
+## Project origin
+
+Task Workbench grew out of a small set of collision experiments: taking workflow patterns from the Sheng-Wan-Wu skill, comparing them with lessons from the Bun porting experiment, and then distilling the resulting artifacts into a minimal reusable harness.
+
+The public version was shaped through LingTai-style long-running tool collaboration and Work Buddy feedback, but the repository itself is intentionally presented as an ordinary, domain-neutral utility. It does not include the original domain materials or private experiment records; only the general runner, verifier patterns, examples, and tests are kept here.
+
 ## Design choices and relative differences
 
 This prototype does not claim a new category of tool. The useful choices are small and practical:
