@@ -81,7 +81,7 @@ Prefer `command_argv` over shell command strings. Legacy `command` strings are r
 
 ## Project origin
 
-Task Workbench grew out of a small set of collision experiments: taking workflow patterns from the Sheng-Wan-Wu skill, comparing them with lessons from the Bun porting experiment, and then distilling the resulting artifacts into a minimal reusable harness.
+Task Workbench grew out of a small set of collision experiments: taking workflow patterns from the [Wan-Wu-Sheng / 万物生 skill](https://github.com/9s5bz2jvd2-lang/wusheng), comparing them with lessons from the Bun porting experiment, and then distilling the resulting artifacts into a minimal reusable harness.
 
 The public version was shaped through LingTai-style long-running tool collaboration and Work Buddy feedback, but the repository itself is intentionally presented as an ordinary, domain-neutral utility. It does not include the original domain materials or private experiment records; only the general runner, verifier patterns, examples, and tests are kept here.
 
