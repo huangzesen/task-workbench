@@ -1,0 +1,7 @@
+{
+  "name": "empty-verifiers-should-fail",
+  "goal": "Negative control: zero verifiers must not become a green run by default.",
+  "command_argv": ["python3", "-c", "print('command passed, but no verifier exists')"],
+  "timeout_seconds": 30,
+  "verifiers": []
+}

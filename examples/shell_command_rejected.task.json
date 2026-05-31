@@ -1,0 +1,14 @@
+{
+  "name": "shell-command-rejected",
+  "goal": "Negative control: legacy shell command strings must fail closed unless allow_shell is explicit.",
+  "params": {"text": "hello"},
+  "command": "printf '{{ params.text }}\\n' > legacy_shell.txt",
+  "timeout_seconds": 30,
+  "verifiers": [
+    {
+      "type": "python",
+      "call": "workbench.verifiers.files:file_contains",
+      "params": {"path": "legacy_shell.txt", "contains": "hello"}
+    }
+  ]
+}

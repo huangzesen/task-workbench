@@ -1,0 +1,29 @@
+{
+  "name": "hello-file-demo-json",
+  "goal": "Create a small artifact and verify that it contains the expected seed text.",
+  "params": {
+    "output": "hello_seed_json.txt",
+    "text": "write it down, verify it"
+  },
+  "command_argv": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import sys; out,text=sys.argv[1],sys.argv[2]; Path('demo_out').mkdir(exist_ok=True); Path('demo_out', out).write_text(text + chr(10), encoding='utf-8')",
+    "{{ params.output }}",
+    "{{ params.text }}"
+  ],
+  "timeout_seconds": 30,
+  "verifiers": [
+    {
+      "type": "python",
+      "call": "workbench.verifiers.files:file_contains",
+      "params": {
+        "path": "demo_out/{{ params.output }}",
+        "contains": "{{ params.text }}"
+      }
+    }
+  ],
+  "evidence": ["demo_out/{{ params.output }} should contain the seed text."],
+  "gotchas": ["This toy uses command_argv/shell=False; legacy shell commands require explicit allow_shell: true."],
+  "return_seeds": ["The task seed format can wrap any deterministic argv command plus verifier."]
+}

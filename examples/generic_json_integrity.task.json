@@ -1,0 +1,28 @@
+{
+  "name": "generic-json-integrity-demo",
+  "goal": "Create domain-neutral JSON artifacts and verify parseability, required fields, unique stems, unique IDs, and minimum count.",
+  "command_argv": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import json; root=Path('demo_json/cards'); root.mkdir(parents=True, exist_ok=True); (root/'alpha.json').write_text(json.dumps({'id':'alpha','kind':'demo','payload':{'ok': True}}, ensure_ascii=False), encoding='utf-8'); (root/'beta.json').write_text(json.dumps({'id':'beta','kind':'demo','payload':{'ok': True}}, ensure_ascii=False), encoding='utf-8')"
+  ],
+  "timeout_seconds": 30,
+  "verifiers": [
+    {
+      "type": "python",
+      "call": "workbench.verifiers.json_integrity:json_collection_health",
+      "params": {
+        "path": "demo_json/cards",
+        "glob": "**/*.json",
+        "min_count": 2,
+        "unique_stem": true,
+        "id_field": "id",
+        "unique_id": true,
+        "required_fields": ["id", "kind", "payload.ok"]
+      }
+    }
+  ],
+  "evidence": ["demo_json/cards contains two parseable domain-neutral JSON cards."],
+  "gotchas": ["This verifier is generic: it checks artifact integrity, not domain semantics."],
+  "return_seeds": ["Use json_collection_health before writing a project-specific semantic verifier."]
+}

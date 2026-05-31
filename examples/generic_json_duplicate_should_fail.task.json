@@ -1,0 +1,25 @@
+{
+  "name": "generic-json-duplicate-true-red",
+  "goal": "Negative control: two JSON files with the same filename stem must fail the generic integrity gate.",
+  "command_argv": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import json; root=Path('demo_json/cards'); (root/'a').mkdir(parents=True, exist_ok=True); (root/'b').mkdir(parents=True, exist_ok=True); (root/'a'/'apple.json').write_text(json.dumps({'id':'apple-a','kind':'demo'}, ensure_ascii=False), encoding='utf-8'); (root/'b'/'apple.json').write_text(json.dumps({'id':'apple-b','kind':'demo'}, ensure_ascii=False), encoding='utf-8')"
+  ],
+  "timeout_seconds": 30,
+  "verifiers": [
+    {
+      "type": "python",
+      "call": "workbench.verifiers.json_integrity:json_collection_health",
+      "params": {
+        "path": "demo_json/cards",
+        "glob": "**/*.json",
+        "min_count": 2,
+        "unique_stem": true,
+        "id_field": "id",
+        "required_fields": ["id", "kind"]
+      }
+    }
+  ],
+  "gotchas": ["This should fail closed with duplicate_json_stems."]
+}

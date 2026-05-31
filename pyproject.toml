@@ -1,0 +1,10 @@
+[project]
+name = "task-workbench"
+version = "0.1.0"
+description = "A small local task runner with verifier-gated run artifacts."
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+[project.optional-dependencies]
+yaml = ["PyYAML>=6"]

@@ -1,0 +1,29 @@
+{
+  "name": "shell-injection-regression",
+  "goal": "Prove rendered params passed through command_argv are not interpreted by a shell.",
+  "params": {
+    "output": "injection.txt",
+    "text": "'; touch PWNED; echo '"
+  },
+  "command_argv": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import sys; out,text=sys.argv[1],sys.argv[2]; Path('demo_out').mkdir(exist_ok=True); Path('demo_out', out).write_text(text + chr(10), encoding='utf-8')",
+    "{{ params.output }}",
+    "{{ params.text }}"
+  ],
+  "timeout_seconds": 30,
+  "verifiers": [
+    {
+      "type": "python",
+      "call": "workbench.verifiers.files:file_contains",
+      "params": {"path": "demo_out/{{ params.output }}", "contains": "{{ params.text }}"}
+    },
+    {
+      "type": "python",
+      "call": "workbench.verifiers.files:file_absent",
+      "params": {"path": "PWNED"}
+    }
+  ],
+  "gotchas": ["If this task creates workspace/PWNED, command rendering has regressed into shell execution."]
+}

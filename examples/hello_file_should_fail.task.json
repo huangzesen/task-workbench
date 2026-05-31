@@ -1,0 +1,17 @@
+{
+  "name": "hello-file-true-red",
+  "goal": "Negative control: command succeeds but verifier must fail.",
+  "command_argv": [
+    "python3",
+    "-c",
+    "from pathlib import Path; Path('demo_out').mkdir(exist_ok=True); Path('demo_out/red.txt').write_text('green' + chr(10), encoding='utf-8')"
+  ],
+  "timeout_seconds": 30,
+  "verifiers": [
+    {
+      "type": "python",
+      "call": "workbench.verifiers.files:file_contains",
+      "params": {"path": "demo_out/red.txt", "contains": "red"}
+    }
+  ]
+}
