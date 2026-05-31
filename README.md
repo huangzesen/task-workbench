@@ -77,6 +77,20 @@ verifiers:
 
 Prefer `command_argv` over shell command strings. Legacy `command` strings are rejected unless a task explicitly sets `allow_shell: true`.
 
+
+## Design choices and relative differences
+
+This prototype does not claim a new category of tool. The useful choices are small and practical:
+
+- **Task seeds over chat history**: a task is saved as a JSON/YAML file with parameters, command, verifiers, evidence notes, and gotchas, so it can be rerun without reconstructing context from a conversation.
+- **Verifier-first completion**: a run passes only when verifiers pass. The runner records failures as first-class artifacts instead of treating them as informal notes.
+- **Run ledger plus return note**: every run leaves both machine-readable events (`ledger.jsonl`) and a short human-readable report (`return_note.md`).
+- **Negative controls are part of the examples**: the repository includes seeds that should fail, so verifier behavior can be checked against known red cases.
+- **Shell execution is opt-in**: parameterized tasks should use `command_argv`; legacy shell strings fail closed unless `allow_shell: true` is set.
+- **Generic JSON artifact gate**: before writing a domain-specific semantic verifier, `json_collection_health` can catch common structural problems such as parse errors, count mismatches, duplicate stems, duplicate IDs, and missing dotted fields.
+
+These are design tradeoffs, not claims of novelty. Mature CI, evaluation, and benchmark tools cover larger parts of the space. Task Workbench is meant to be a compact local harness for cases where a small reproducible seed and objective verifier are enough.
+
 ## Included verifiers
 
 ### `workbench.verifiers.files:file_contains`
